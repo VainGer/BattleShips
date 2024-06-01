@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battleships</title>
+    <script type="module" src="./scripts/index.js"></script>
+    <link rel="stylesheet" href="./styles/index.css">
+</head>
+
+<body>
+    <div id="effects">
+        <video id="explosionVid">
+            <source src="./videos/explosion.mp4" type="video/mp4">;
+        </video>
+    </div>
+    <div id="pop-up">
+    </div>
+    <div id="settings-and-start" class="grid">
+        <div id="grid-size" class="grid">
+            <input type="radio" name="gridSize" id="ten" value="10" checked="checked">
+            <label for="ten">10 X 10</label>
+            <input type="radio" name="gridSize" id="eleven" value="11">
+            <label for="eleven">11 X 11</label>
+            <input type="radio" name="gridSize" id="twelve" value="12">
+            <label for="twelve">12 X 12</label>
+            <input type="radio" name="gridSize" id="therteen" value="13">
+            <label for="therteen">13 X 13</label>
+            <input type="radio" name="gridSize" id="fourteen" value="14">
+            <label for="fourteen">14 X 14</label>
+            <input type="radio" name="gridSize" id="fifteen" value="15">
+            <label for="fifteen">15 X 15</label>
+        </div>
+        <div id="battleships" class="grid">
+            <label for="ship-size">Battleship size 2</label>
+            <input type="text" name="ship-size" id="size2" value="0">
+            <label for="ship-size">Battleship size 3</label>
+            <input type="text" name="ship-size" id="size3" value="0">
+            <label for="ship-size">Battleship size 4</label>
+            <input type="text" name="ship-size" id="size4" value="0">
+            <label for="ship-size">Battleship size 5</label>
+            <input type="text" name="ship-size" id="size5" value="0">
+        </div>
+        <button id="start-game">Start Game</button>
+    </div>
+    <div class="grid" id="game">
+        <table id="game-board"></table>
+        <table id="info">
+            <tr>
+                <th>Sub Type</th>
+                <th>Sub Amount</th>
+            </tr>
+            <tr>
+                <td>Sub type 2</td>
+                <td id="type2"></td>
+            </tr>
+            <tr>
+                <td>Sub type 3</td>
+                <td id="type3"></td>
+            </tr>
+            <tr>
+                <td>Sub type 4</td>
+                <td id="type4"></td>
+            </tr>
+            <tr>
+                <td>Sub type 5</td>
+                <td id="type5"></td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>
