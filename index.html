@@ -11,9 +11,9 @@
 
 <body>
     <div id="effects">
-        <video id="explosionVid">
-            <source src="./videos/explosion.mp4" type="video/mp4">;
-        </video>
+        <audio id="explosion-snd">
+            <source src="./sounds/explosion.mp3" type="audio/mp3">;
+        </audio>
     </div>
     <div id="pop-up">
     </div>
@@ -45,29 +45,30 @@
         <button id="start-game">Start Game</button>
     </div>
     <div class="grid" id="game">
+        <img id="boom" src="./animations/boom.gif" alt="">
         <table id="game-board"></table>
-        <table id="info">
-            <tr>
-                <th>Sub Type</th>
-                <th>Sub Amount</th>
-            </tr>
-            <tr>
-                <td>Sub type 2</td>
-                <td id="type2"></td>
-            </tr>
-            <tr>
-                <td>Sub type 3</td>
-                <td id="type3"></td>
-            </tr>
-            <tr>
-                <td>Sub type 4</td>
-                <td id="type4"></td>
-            </tr>
-            <tr>
-                <td>Sub type 5</td>
-                <td id="type5"></td>
-            </tr>
-        </table>
+    <table id="info">
+        <tr>
+            <th>Sub Type</th>
+            <th>Sub Amount</th>
+        </tr>
+        <tr>
+            <td>Sub type 2</td>
+            <td id="type2"></td>
+        </tr>
+        <tr>
+            <td>Sub type 3</td>
+            <td id="type3"></td>
+        </tr>
+        <tr>
+            <td>Sub type 4</td>
+            <td id="type4"></td>
+        </tr>
+        <tr>
+            <td>Sub type 5</td>
+            <td id="type5"></td>
+        </tr>
+    </table>
     </div>
 </body>
 

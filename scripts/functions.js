@@ -1,26 +1,63 @@
 
-export function getFieldSize() {
+export function startGame(event) {
+    let numOfShips = [getNumOfShips(`2`), getNumOfShips(`3`), getNumOfShips(`4`), getNumOfShips(`5`)];
+    if (numOfShips.some(num => isNaN(num) || num < 0)) {
+        alert(`Invalid value for number of ships, please try positive numbers`);
+        location.reload();
+        return;
+    }
+    let fieldArray = createFieldArray(getFieldSize());
+    let gameBoard = document.querySelector(`#game-board`);
+    let explosionSnd = document.querySelector(`#explosion-snd`);
+    let boomAnimation = document.querySelector(`#boom`);
+    gameBoard.innerHTML = showField(fieldArray);
+    initShips(fieldArray, numOfShips[0], numOfShips[1], numOfShips[2], numOfShips[3], numOfShips[4]);
+    showScore(getScore(fieldArray));
+    let buttons = document.querySelectorAll(`.fieldBtn-`);
+    for (let button of buttons) {
+        button.addEventListener(`click`, () => {
+            let rowAndCol = button.id.substring(2).split(`-`);
+            checkIfShip(rowAndCol[0], rowAndCol[1], fieldArray);
+            let score = getScore(fieldArray);
+            for (let i = 0; i < numOfShips.length; i++) {
+                if (numOfShips[i] !== score[i]) {
+                    numOfShips[i]--;
+                    explosionSnd.play();
+                    boomAnimation.style.display = `block`;
+                    setTimeout(() => {
+                        boomAnimation.style.display = `none`;
+                    }, 2500);
+                    let shipClass = button.className.split(`-`);
+                    let destroyedShipCells = shipClass[2];
+                    let destroyedShip = document.querySelectorAll(`${destroyedShipCells}`);
+                    console.log(destroyedShip.length);
+                }
+            }
+        });
+    }
+}
+function getFieldSize() {
     let selection = document.querySelector(`input[name="gridSize"]:checked`);
     let size = selection ? Number(selection.value) : 0;
     return size;
 }
 
-export function createFieldArray(size) {
+function createFieldArray(size) {
     return new Array(size).fill(0).map(() => new Array(size).fill(0));
 }
 
-export function showField(fieldArray) {
+function showField(fieldArray) {
     let field = ``;
     for (let i = 0; i < fieldArray.length; i++) {
         field += `<tr>`;
         for (let j = 0; j < fieldArray.length; j++) {
-            field += `<td><button class="fieldBtn" id="b-${i}-${j}"></button></td>`;
+            field += `<td><button class="fieldBtn-" id="b-${i}-${j}"></button></td>`;
         }
         field += `</tr>`;
     }
     return field;
 }
-export function showScore( scoreArr) {
+function showScore(scoreArr) {
     let type2 = document.querySelector(`#type2`);
     let type3 = document.querySelector(`#type3`);
     let type4 = document.querySelector(`#type4`);
@@ -30,33 +67,32 @@ export function showScore( scoreArr) {
     type4.innerHTML = scoreArr[2];
     type5.innerHTML = scoreArr[3];
 }
-export function checkIfShip(x, y, fieldArray) {
+function checkIfShip(x, y, fieldArray) {
     let cell = document.querySelector(`#b-${x}-${y}`);
     if (fieldArray[x][y] === 1) {
-        cell.style.backgroundColor = `red`;
+        cell.classList.add(`damaged-`);
         fieldArray[x][y] = 2;
-        updateScore(fieldArray);
+        showScore(getScore(fieldArray));
     }
     if (fieldArray[x][y] === 0 || fieldArray[x][y] === 3) {
         cell.style.backgroundColor = `blue`;
     }
 }
-export function updateScore(fieldArray) {
-    let countType2 = 0, countType3 = 0, countType4 = 0, countType5 = 0;
+function getScore(fieldArray) {
+    let countType2 = Number(0), countType3 = Number(0), countType4 = Number(0), countType5 = Number(0);
     let counted = [];
     for (let i = 0; i < fieldArray.length; i++) {
         for (let j = 0; j < fieldArray[0].length; j++) {
             if (fieldArray[i][j] === 1) {
                 let shipClass = document.querySelector(`#b-${i}-${j}`).className;
-                let shipSize = shipClass.charAt(17);
-                let shipNum = shipClass.substring(26);
-                let shipCharacteristics = `size:${shipSize}-num:${shipNum}`;
-                if (!counted.includes(shipCharacteristics)) {
-                    counted.push(shipCharacteristics);
-                    if (shipSize === `2`) countType2++;
-                    if (shipSize === `3`) countType3++;
-                    if (shipSize === `4`) countType4++;
-                    if (shipSize === `5`) countType5++;
+                let shipNumAndSizeArr = shipClass.split(`-`);
+                let shipNumAndSize = `${shipNumAndSizeArr[1]}-${shipNumAndSizeArr[2]}`;
+                if (!counted.includes(shipNumAndSize)) {
+                    counted.push(shipNumAndSize);
+                    if (shipNumAndSizeArr[1].charAt(9) === `2`) countType2++;
+                    if (shipNumAndSizeArr[1].charAt(9) === `3`) countType3++;
+                    if (shipNumAndSizeArr[1].charAt(9) === `4`) countType4++;
+                    if (shipNumAndSizeArr[1].charAt(9) === `5`) countType5++;
                 }
             }
         }
@@ -64,7 +100,7 @@ export function updateScore(fieldArray) {
     return [countType2, countType3, countType4, countType5];
 }
 
-export function initShips(fieldArray, numOf2, numOf3, numOf4, numOf5) {
+function initShips(fieldArray, numOf2, numOf3, numOf4, numOf5) {
     const SIZE_OF_2 = 2, SIZE_OF_3 = 3, SIZE_OF_4 = 4, SIZE_OF_5 = 5;
     let countPlaced2 = 0;
     let countPlaced3 = 0;
@@ -109,8 +145,8 @@ export function initShips(fieldArray, numOf2, numOf3, numOf4, numOf5) {
             popUp.style.display = `none`;
         });
     }
-    updateScore(fieldArray, countPlaced2, countPlaced3, countPlaced4, countPlaced5);
 }
+
 
 function addShips(fieldArray, length, numOfShips) {
     let countPlaced = 0;
@@ -123,7 +159,7 @@ function addShips(fieldArray, length, numOfShips) {
             countPlaced++;
             for (let i = 0; i < length; i++) {
                 fieldArray[startRow + i][startCol] = 1;
-                document.querySelector(`#b-${startRow + i}-${startCol}`).classList.add(`shipSize${length}-shipNum${countPlaced}`);
+                document.querySelector(`#b-${startRow + i}-${startCol}`).classList.add(`shipSize${length}-shipNum${countPlaced}-`);
             }
             createShipBorder(fieldArray, startRow, startCol, length, isVertical);
             numOfShips--;
@@ -132,7 +168,7 @@ function addShips(fieldArray, length, numOfShips) {
             countPlaced++;
             for (let i = 0; i < length; i++) {
                 fieldArray[startRow][startCol + i] = 1;
-                document.querySelector(`#b-${startRow}-${startCol + i}`).classList.add(`shipSize${length}-shipNum${countPlaced}`);
+                document.querySelector(`#b-${startRow}-${startCol + i}`).classList.add(`shipSize${length}-shipNum${countPlaced}-`);
             }
             createShipBorder(fieldArray, startRow, startCol, length, isVertical);
             numOfShips--;
@@ -156,6 +192,14 @@ function createPositions(arrLength, arr0Length, length) {
     }
     return positions;
 }
+/**
+ * The function `shuffleShipPositions` shuffles the positions of ships in an array using the
+ * Fisher-Yates algorithm.
+ * @param array - The `shuffleShipPositions` function takes an array as a parameter and shuffles the
+ * elements within the array randomly. It uses the Fisher-Yates shuffle algorithm to achieve this.
+ * @returns The `shuffleShipPositions` function returns the input array with its elements shuffled in a
+ * random order.
+ */
 function shuffleShipPositions(array) {
     for (let i = array.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1));
@@ -219,7 +263,7 @@ function canPlaceHorizontal(fieldArray, startRow, startCol, shipSize) {
     return true;
 }
 
-export function getNumOfShips(id) {
+function getNumOfShips(id) {
     let value = document.querySelector(`#size${id}`).value;
-    return value;
+    return Number(value);
 }
