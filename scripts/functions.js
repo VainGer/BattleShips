@@ -29,7 +29,7 @@ export function startGame(event) {
                     }, 2500);
                     let shipClass = button.className.split(`-`);
                     let destroyedShipCells = shipClass[2];
-                    let destroyedShip = document.querySelectorAll(`${destroyedShipCells}`);
+                    let destroyedShip = document.querySelectorAll(`.${destroyedShipCells}`);
                     console.log(destroyedShip.length);
                 }
             }
