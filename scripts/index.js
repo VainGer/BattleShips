@@ -1,4 +1,3 @@
-import { startGame } from "./functions.js";
+import { main } from "./functions.js";
 
-let startGamebtn = document.querySelector(`#start-game`);
-startGamebtn.addEventListener(`click`, startGame);
+main();

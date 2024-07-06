@@ -1,96 +1,132 @@
-* {
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+body {
     text-align: center;
 }
 
-.grid {
+#inputAndStart {
     display: grid;
+    grid-template-columns: 1fr 2fr 1fr 2fr;
+    margin-bottom: 32px;
 }
 
-#grid-size {
-    padding-inline: 16px;
+#fieldSize {
+    display: grid;
     grid-template-columns: 1fr 1fr;
+    justify-self: left;
 }
 
-#settings-and-start {
-    margin-inline: auto;
-    grid-template-columns: 0.5fr 1fr 1fr;
-    padding-inline: 16px;
+#fieldSize input {
+    justify-self: right;
 }
 
-#battleships {
-    padding-inline: 16px;
+#startGame {
+    width: 50%;
+    margin: 0 auto;
 }
 
-#game {
-    grid-template-columns: 1.5fr 1fr;
-    padding-block: 16px;
-}
-#game-board{
-    width: 100%;
-}
-#game-board,
-#info {
-    margin-inline: 16px;
+#numOfShips {
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
 }
 
-
-.fieldBtn- {
-    width: 90%;
-    height: 90%;
-    background-color: grey;
-    font-weight: bold;
-    color: white;
+#numOfShips label {
+    justify-self: right;
+    margin-right: 12px;
+    margin: auto;
 }
 
-.damaged- {
-    background-color: red;
+#numOfShips input {
+    margin-block: auto;
 }
 
-.destroyed {
-    background-image: url(../animations/fire.gif);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 49%;
+#score {
+    width: 80%;
 }
 
 table,
 tr,
 td,
 th {
-    text-align: center;
-    border-collapse: collapse;
     border: 1px solid black;
+    border-collapse: collapse;
 }
 
-table {
-    height: 500px;
+#gameField {
+    width: max-content;
+    margin: 0 auto;
 }
 
-#pop-up {
-    display: none;
+#gameTbl td {
+    width: 40px;
+    height: 40px;
+    background-color: rgb(117, 117, 117);
+    cursor: url(../assets/cursors/crosshair.png);
+}
+
+#gameTbl:hover {
+     cursor: crosshair;
+}
+
+#message {
     position: absolute;
-    z-index: 1;
-    width: 50vw;
-    height: 50vh;
-    background-color: grey;
-    right: 25%;
-    top: 25%;
-}
-
-#closeBtn {
-    background-image: url(../icons/close.svg);
-    background-repeat: no-repeat;
-    border: none;
-    width: 30px;
-    height: 30px;
-    position: absolute;
-    right: 3%;
-    top: 3%;
-}
-
-#boom{
-    position: absolute;
+    background-color: turquoise;
     width: 500px;
-    left: 10%;
+    height: 250px;
+    top: 25%;
+    right: 43%;
     display: none;
+}
+
+#closeDiv {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10%;
+}
+
+#closeDiv:hover {
+    cursor: pointer;
+}
+
+.destroyed {
+    background-image: url(../assets/gifs/fire.gif);
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+#explosion {
+    width: 300px;
+}
+
+#victory {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url(../assets/images/victory.jpg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: 20%;
+    display: none;
+}
+
+#congratulations {
+    background-color: cyan;
+    width: 20%;
+    height: 20%;
+    margin-inline: auto;
+    margin-top: 5%;
+}
+
+#congratulations h2 {
+    font-size: 3em;
+    margin-bottom: 15%;
 }
