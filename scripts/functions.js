@@ -146,7 +146,6 @@ function placeShips(positionsArr, size, numOfShips) {
                 i++;
                 placed++;
             }
-            // if (k + 1 === positionsArr.length) i = numOfShips;
         }
     }
     return placed;
@@ -156,7 +155,6 @@ function placeShipHorizontal(startRow, startCol, size) {
     for (let i = 0; i < size; i++) {
         globals.battleFieldArr[startRow][startCol + i] = [globals.shipId, size];
         let td = document.querySelector(`#r${startRow}-c${startCol + i}`);
-        td.style.backgroundColor = `red`;
     }
     globals.shipId++;
     createHorizontalBorder(startRow, startCol, size);
@@ -165,7 +163,6 @@ function placeShipVertical(startRow, startCol, size) {
     for (let i = 0; i < size; i++) {
         globals.battleFieldArr[startRow + i][startCol] = [globals.shipId, size];
         let td = document.querySelector(`#r${startRow + i}-c${startCol}`);
-        td.style.backgroundColor = `red`;
     }
     globals.shipId++;
     createVerticalBorder(startRow, startCol, size)
@@ -225,12 +222,12 @@ function hitTheShip(event) {
     tdId = tdId.split(`-`);
     let [row, col] = [tdId[0].substring(1), tdId[1].substring(1)];
     if (globals.battleFieldArr[row][col][0] && !td.classList.contains(`destroyed`)) {
-        td.style.backgroundColor = `blue`;
+        td.style.backgroundColor = `red`;
         td.classList.add(`damaged`, `n${globals.battleFieldArr[row][col][0]}`);
         shipIsDestroyed(td, row, col)
     }
     else if (!globals.battleFieldArr[row][col][0]) {
-        td.style.backgroundColor = `green`;
+        td.style.backgroundColor = `cyan`;
         onClickEffects(`miss`);
     }
 }
@@ -336,6 +333,8 @@ function playExplosionGif() {
 function showVictoryDisplay() {
     let btn = document.querySelector(`#restart`);
     let victoryDisplay = document.querySelector(`#victory`);
-    victoryDisplay.style.display = `block`;
+    let gameSection = document.querySelector(`#gameSection`);
+    gameSection.style.display = `none`;
+    victoryDisplay.style.display = `grid`;
     btn.addEventListener(`click`, () => location.reload());
 }

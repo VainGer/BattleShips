@@ -71,7 +71,7 @@ th {
 }
 
 #gameTbl:hover {
-     cursor: crosshair;
+    cursor: crosshair;
 }
 
 #message {
@@ -116,17 +116,19 @@ th {
     background-repeat: no-repeat;
     background-position: 20%;
     display: none;
+    background-color: rgb(161, 182, 182);
+    grid-template-rows: 1fr 1fr;
 }
 
-#congratulations {
-    background-color: cyan;
-    width: 20%;
-    height: 20%;
-    margin-inline: auto;
-    margin-top: 5%;
+#victoryGif {
+    margin: 5% auto;
+    border: 2px solid black;
 }
 
-#congratulations h2 {
-    font-size: 3em;
-    margin-bottom: 15%;
+#restart {
+    width: max-content;
+    height: max-content;
+    margin: 5% auto;
+    background-color: aqua;
+    font-size: larger;
 }
